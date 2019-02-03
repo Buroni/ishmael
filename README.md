@@ -7,7 +7,7 @@ Ishmael is a text effect vanilla javascript library in progress.
 
 ```js
 // Pass the ID of the element that should be animated.
-const noise = new WordNoise('noise-element');
+const noise = new Ishmael('noise-element');
 
 noise.transition([
   'Call me Ishmael.',
@@ -22,7 +22,7 @@ noise.transition([
 
 Example: https://buroni.github.io/ishmael/
 
-###Transition Options
+### Transition Options
 
 | Object property | Type | Description |
 | ------------- |:-------------:| -----:|
@@ -32,3 +32,7 @@ Example: https://buroni.github.io/ishmael/
 | repeat | boolean | Whether the transition should cycle forever |
 | fromEmpty | boolean | Whether to initiate from empty string or from the first sentence in array |
 | flicker | boolean | Whether to randomly flicker characters with noise in the transition |
+
+### Transition Styling
+
+Add style attributes to the CSS class `.ishmael-noise` to style the noise characters in the transition.
