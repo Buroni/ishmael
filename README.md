@@ -20,9 +20,9 @@ noise.transition([
 ]);
 ```
 
-Example: 
+Example: https://buroni.github.io/ishmael/
 
-####Transition Options
+###Transition Options
 
 | Object property | Type | Description |
 | ------------- |:-------------:| -----:|
