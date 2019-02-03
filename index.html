@@ -1,0 +1,18 @@
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="./wordnoise.js"></script>
+    <script>
+      window.onload = () => {
+        const noise = new WordNoise('noise-element');
+        noise.transition([  'Call me Ishmael.',
+          'Some years ago',
+          'never mind how long precisely',
+          'having little or no money in my purse',
+          'and nothing particular to interest me on shore',
+          'I thought I would sail about a little',
+          'and see the watery part of the world.']);
+      };
+    </script>
+</head>
+
+<p id="noise-element"></p>
