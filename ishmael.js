@@ -2,13 +2,15 @@ class WordNoise {
 
   constructor(elementId) {
     this.node = document.getElementById(elementId);
+    this.noiseIndexes = [];
 
     this.options = {
       delay: 1000,
-      fps: 30,
-      charset: 'abcdefghijklmnopqrstuvwxyz__________________',
+      fps: 40,
+      charset: 'qwertyuiopasdfghjklzxcvbnm_____________________',
       repeat: true,
-      fromEmpty: true
+      fromEmpty: true,
+      flicker: true
     }
   }
 
@@ -40,11 +42,15 @@ class WordNoise {
 
 
   _transitionPair(str1, str2, flippedIndexes = [], iterations = 0) {
-
-    this.node.innerHTML = this._style(str1, flippedIndexes);
+    this.node.innerHTML = this._style(str1);
+    console.log(this.noiseIndexes);
 
     if (str1 === str2) {
       return str1;
+    }
+
+    if (iterations === 0) {
+      this.noiseIndexes = [];
     }
 
     const delay = (iterations === 0) ? this.options.delay : 1000 / this.options.fps;
@@ -55,17 +61,18 @@ class WordNoise {
     // On the first iteration if strings aren't equal length, pad the
     // smaller one with random characters or trim down the larger one.
     if (str1.length < str2.length) {
-      adjustedStr1 = WordNoise._padOne(str1, charset);
+      adjustedStr1 = this._padOne(str1, charset);
     }
     else if (str1.length > str2.length) {
       adjustedStr1 = WordNoise._removeOne(str1);
     }
     else {
       const noiseIndex = Math.floor(Math.random() * adjustedStr1.length);
-      if ((flippedIndexes.includes(noiseIndex) && Math.floor(Math.random() * iterations) == 0)
+      if ((flippedIndexes.includes(noiseIndex) && Math.floor(Math.random() * iterations) == 0 && this.options.flicker)
           || !flippedIndexes.includes(noiseIndex)) {
         const randomChar = WordNoise._randomChar(charset);
         adjustedStr1 = `${WordNoise._setCharAt(adjustedStr1, noiseIndex, randomChar)}`;
+        this.noiseIndexes.push(noiseIndex);
         if (flippedIndexes.includes(noiseIndex)) {
           flippedIndexes = flippedIndexes.filter(i => i !== noiseIndex);
         }
@@ -77,6 +84,8 @@ class WordNoise {
       adjustedStr1 = WordNoise._setCharAt(adjustedStr1, flipIndex, adjustedStr2.charAt(flipIndex));
     }
 
+    this.noiseIndexes = [...new Set(this.noiseIndexes.filter(i => !flippedIndexes.includes(i)))];
+
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         requestAnimationFrame(() => {
@@ -86,10 +95,18 @@ class WordNoise {
     });
   }
 
-  _style(str, flippedIndexes) {
-    if (flippedIndexes.length === 0) return str;
-    const hotIndex = flippedIndexes[flippedIndexes.length - 1];
-    return `${str.substr(0, hotIndex)}<span class='ishmael-hot'>${str.charAt(hotIndex)}</span>${str.substr(hotIndex + 1)}`;
+  _style(str) {
+    if (this.noiseIndexes.length === 0) return str;
+    this.noiseIndexes = this.noiseIndexes.sort((a, b) => a - b);
+    const newStrs = [];
+
+    newStrs.push(str.slice(0, this.noiseIndexes[0]));
+
+    for (let i = 0; i < this.noiseIndexes.length; i++) {
+      const chr = str.slice(this.noiseIndexes[i], this.noiseIndexes[i] + 1);
+      newStrs.push(`<span class='ishmael-noise'>${chr}</span>${str.slice(this.noiseIndexes[i] + 2, this.noiseIndexes[i + 1])}`);
+    }
+    return newStrs.join('');
   }
 
   static _getFlipIndex(flippedIndexes, len) {
@@ -108,9 +125,17 @@ class WordNoise {
     return str.substr(0, index) + chr + str.substr(index + 1);
   }
 
-  static _padOne(str, charset) {
+  _padOne(str, charset) {
     const prefix = (Math.round(Math.random()) === 1) ? true : false;
     const char = WordNoise._randomChar(charset);
+
+    if (prefix) {
+      this.noiseIndexes = this.noiseIndexes.map(i => i + 1);
+      this.noiseIndexes.push(0);
+    } else {
+      this.noiseIndexes.push(str.length);
+    }
+
     return (prefix) ? `${char}${str}` : `${str}${char}`;
   }
 
