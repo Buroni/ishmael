@@ -6,7 +6,7 @@ class WordNoise {
     this.options = {
       delay: 1000,
       fps: 30,
-      charset: '____',
+      charset: 'abcdefghijklmnopqrstuvwxyz__________________',
       repeat: true,
       fromEmpty: true
     }
