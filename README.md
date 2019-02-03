@@ -7,7 +7,7 @@ Ishmael is a text effect vanilla javascript library in progress.
 
 ```js
 // Pass the ID of the element that should be animated.
-const noise = new WordNoise('noise-element');
+const noise = new Ishmael('noise-element');
 
 noise.transition([
   'Call me Ishmael.',
