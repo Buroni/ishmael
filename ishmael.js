@@ -43,7 +43,6 @@ class Ishmael {
 
   _transitionPair(str1, str2, flippedIndexes = [], iterations = 0) {
     this.node.innerHTML = this._style(str1);
-    console.log(this.noiseIndexes);
 
     if (str1 === str2) {
       return str1;
