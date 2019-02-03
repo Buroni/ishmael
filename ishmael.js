@@ -1,4 +1,4 @@
-class WordNoise {
+class Ishmael {
 
   constructor(elementId) {
     this.node = document.getElementById(elementId);
