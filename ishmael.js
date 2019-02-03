@@ -64,24 +64,24 @@ class Ishmael {
       adjustedStr1 = this._padOne(str1, charset);
     }
     else if (str1.length > str2.length) {
-      adjustedStr1 = WordNoise._removeOne(str1);
+      adjustedStr1 = Ishmael._removeOne(str1);
     }
     else {
       const noiseIndex = Math.floor(Math.random() * adjustedStr1.length);
       if ((flippedIndexes.includes(noiseIndex) && Math.floor(Math.random() * iterations) == 0 && this.options.flicker)
           || !flippedIndexes.includes(noiseIndex)) {
-        const randomChar = WordNoise._randomChar(charset);
-        adjustedStr1 = `${WordNoise._setCharAt(adjustedStr1, noiseIndex, randomChar)}`;
+        const randomChar = Ishmael._randomChar(charset);
+        adjustedStr1 = `${Ishmael._setCharAt(adjustedStr1, noiseIndex, randomChar)}`;
         this.noiseIndexes.push(noiseIndex);
         if (flippedIndexes.includes(noiseIndex)) {
           flippedIndexes = flippedIndexes.filter(i => i !== noiseIndex);
         }
       }
 
-      const flipIndex = WordNoise._getFlipIndex(flippedIndexes, adjustedStr1.length);
+      const flipIndex = Ishmael._getFlipIndex(flippedIndexes, adjustedStr1.length);
       flippedIndexes.push(flipIndex);
 
-      adjustedStr1 = WordNoise._setCharAt(adjustedStr1, flipIndex, adjustedStr2.charAt(flipIndex));
+      adjustedStr1 = Ishmael._setCharAt(adjustedStr1, flipIndex, adjustedStr2.charAt(flipIndex));
     }
 
     this.noiseIndexes = [...new Set(this.noiseIndexes.filter(i => !flippedIndexes.includes(i)))];
@@ -111,7 +111,7 @@ class Ishmael {
 
   static _getFlipIndex(flippedIndexes, len) {
     const zeroToLen = Array.apply(null, {length: len}).map(Number.call, Number);
-    const unflippedIndexes = WordNoise._diff(flippedIndexes, zeroToLen);
+    const unflippedIndexes = Ishmael._diff(flippedIndexes, zeroToLen);
     const flipIndex = unflippedIndexes[Math.floor(Math.random() * unflippedIndexes.length)];
     return flipIndex;
   }
@@ -127,7 +127,7 @@ class Ishmael {
 
   _padOne(str, charset) {
     const prefix = (Math.round(Math.random()) === 1) ? true : false;
-    const char = WordNoise._randomChar(charset);
+    const char = Ishmael._randomChar(charset);
 
     if (prefix) {
       this.noiseIndexes = this.noiseIndexes.map(i => i + 1);
