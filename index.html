@@ -4,6 +4,9 @@
     <script>
       window.onload = () => {
         const noise = new Ishmael('noise-element');
+        const options = {
+          charset: '_'
+        };
         noise.transition([
           'Call me Ishmael.',
           'Some years ago',
@@ -12,7 +15,7 @@
           'and nothing particular to interest me on shore',
           'I thought I would sail about a little',
           'and see the watery part of the world.'
-        ]);
+        ], options);
       };
     </script>
 </head>
