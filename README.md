@@ -28,7 +28,7 @@ Example: https://buroni.github.io/ishmael/
 | ------------- |:-------------:| -----:|
 | charset | string | 'Noise' characters to be used in the transition |
 | delay      | number | Milliseconds to persist each sentence before transitioning |
-| direction| 'random' \| 'lr' \| 'rl' \| The direction in which to transition between sentences |
+| direction| 'random' \| 'lr' \| 'rl' | The direction in which to transition between sentences |
 | flicker | boolean | Whether to randomly flicker characters with noise in the transition |
 | fps      | number     | Frames per second in the transition animation |
 | fromEmpty | boolean | Whether to initiate from empty string or from the first sentence in array |
